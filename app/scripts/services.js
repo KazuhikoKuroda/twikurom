@@ -11,7 +11,7 @@ angular.module('twikuromApp.services', [])
 				});
 				//try to create an authorization result when the page loads,
 				// this means a returning user won't have to click the twitter button again
-				authResult = OAuth.create("twitter");
+				authResult = OAuth.create('twitter');
 			},
 			isReady: function() {
 				return authResult;
