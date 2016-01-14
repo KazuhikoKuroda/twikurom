@@ -1,23 +1,36 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+<div class="container" ng-controller="TwitterController">
+	<h1>Twitter Viewer</h1>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+	<div class="row">
+		<div class="col-xs-6">
+			<button ng-click="connect()" id="connectButton" type="button" class="btn btn-primary">Twitter認証</button>
+			<button ng-click="getMe()" type="button" class="btn btn-default">me to log</button>
+			<button ng-click="refreshTimeline()" id="getTimelineButton" type="button" class="btn btn-info" style="display:none;">タイムライン取得</button>
+			<button ng-click="signOut()" id="signOut" type="button" class="btn btn-link" style="display:none;">サインアウト</button>
+		</div>
+		<div class="col-xs-6">
+			<input type="text" ng-model="searchTerm" class="form-control" id="searchBox" placeholder="Enter search term here" ng-show="connectedTwitter" />
+		</div>
+	</div>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+	<div class="row">
+		<div class="col-xs-12" id="results">
+			<div class="row well" ng-repeat="t in tweets | filter:searchTerm">
+				<div class="col-xs-2">
+					<img ng-src="{{t.user.profile_image_url}}" class="img-circle">
+				</div>
+				<div class="col-xs-10">
+					<small>{{t.user.name}}</small>
+					<br> <span ng-bind-html="t.text"></span>
+				</div>
+			</div>
+			<div ng-show="rateLimitError">
+				<a href="https://oauth.io/dashboard/my-plans">OAuth.io</a>の無料枠を突"破したようです。2000 calls/month て少ない。
+			</div>
+			<div>
+				<br/>
+				<input type="button" class="btn btn-info" id="load-more" ng-click="refreshTimeline(tweets[tweets.length-1].id)" ng-show="connectedTwitter" value="Load More" />
+			</div>
+		</div>
+	</div>
 </div>

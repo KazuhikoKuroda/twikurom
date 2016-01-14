@@ -8,26 +8,21 @@
  *
  * Main module of the application.
  */
-angular
-  .module('twikuromApp', [
+angular.module('twikuromApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+	'twikuromApp.services'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
+        controller: 'TwitterController',
         controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
       })
       .otherwise({
         redirectTo: '/'
